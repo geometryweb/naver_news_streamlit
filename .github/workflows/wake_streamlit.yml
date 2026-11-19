@@ -2,7 +2,7 @@ name: Wake Up Streamlit App
 
 on:
   schedule:
-    - cron: '0 */6 * * *' # 6시간 마다
+    - cron: '0 */6 * * *'
   workflow_dispatch:
 
 jobs:
@@ -21,12 +21,14 @@ jobs:
           playwright install chromium
 
       - name: 스트림릿 앱 깨우기 실행
+        env:
+          STREAMLIT_APP_URL: ${{ secrets.STREAMLIT_APP_URL }}
         run: |
           python -c "
-          import time
+          import os, time
           from playwright.sync_api import sync_playwright
 
-          url = 'https://newspulseapp.streamlit.app/'
+          url = os.environ['STREAMLIT_APP_URL']
           print(f'접속 시도: {url}')
           with sync_playwright() as p:
               browser = p.chromium.launch(headless=True)
