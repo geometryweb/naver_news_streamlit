@@ -93,7 +93,7 @@ html, body, [data-testid="stAppViewContainer"], [data-testid="stApp"], .main {
     background: rgba(15, 23, 42, 0.85) !important;
     backdrop-filter: blur(12px) !important;
 }
-[data-testid="stToolbar"],
+[data-testid="stToolbarActions"],
 [data-testid="stDeployButton"],
 [data-testid="stMainMenu"],
 .stAppDeployButton,
@@ -472,7 +472,7 @@ html, body, [data-testid="stAppViewContainer"], [data-testid="stApp"], .main {
     background: rgba(248, 250, 252, 0.85) !important;
     backdrop-filter: blur(12px) !important;
 }
-[data-testid="stToolbar"],
+[data-testid="stToolbarActions"],
 [data-testid="stDeployButton"],
 [data-testid="stMainMenu"],
 .stAppDeployButton,
