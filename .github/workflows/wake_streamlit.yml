@@ -1,0 +1,45 @@
+name: Wake Up Streamlit App
+
+on:
+  schedule:
+    - cron: '0 */6 * * *' # 6시간 마다
+  workflow_dispatch:
+
+jobs:
+  wake-up:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Python 환경 설정
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - name: Playwright 및 브라우저 설치
+        run: |
+          pip install playwright
+          playwright install chromium
+
+      - name: 스트림릿 앱 깨우기 실행
+        run: |
+          python -c "
+          import time
+          from playwright.sync_api import sync_playwright
+
+          url = 'https://newspulseapp.streamlit.app/'
+          print(f'접속 시도: {url}')
+          with sync_playwright() as p:
+              browser = p.chromium.launch(headless=True)
+              page = browser.new_page()
+              page.goto(url, timeout=60000)
+              time.sleep(5)
+              btn = page.locator(\"button:has-text('Yes, get this app back up!')\")
+              if btn.is_visible():
+                  print('잠든 앱 발견! 깨우기 버튼 클릭...')
+                  btn.click()
+                  time.sleep(30)
+                  print('앱 깨우기 완료!')
+              else:
+                  print('앱이 이미 깨어있습니다.')
+              browser.close()
+          "
